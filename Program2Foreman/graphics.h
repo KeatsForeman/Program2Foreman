@@ -7,7 +7,7 @@ public:
 	graphics();
 	~graphics();
 	void Draw_grid();
-
+	void cover_square(int x, int y);
 
 
 };

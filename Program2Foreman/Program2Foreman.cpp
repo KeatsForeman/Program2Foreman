@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <string>
+#include <utility>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include "graphics.h"
+#include "logic.h"
 
 int width = 950;
 int height = 600;
@@ -15,6 +17,7 @@ int height = 600;
 int main(int argc, char** argv) {
 
     graphics graphic;
+    logic logic;
     
     //initializations
     if (!al_init()) {
@@ -54,13 +57,26 @@ int main(int argc, char** argv) {
 
 
 
-    bool ExitLoop = false;
+    bool Done = false;
 
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
-    while (true) {
+    while (!Done) {
         graphic.Draw_grid();
         al_flip_display();
+
+        ALLEGRO_EVENT ev;
+        al_wait_for_event(EventQueue, &ev);
+
+        if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { Done = true; }
+
+        else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+            if (ev.mouse.button & 1) {
+                int x = ev.mouse.x;
+                int y = ev.mouse.y;
+            }
+        }
+
     }
 
 
