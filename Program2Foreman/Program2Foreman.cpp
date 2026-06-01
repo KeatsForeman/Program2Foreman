@@ -63,6 +63,7 @@ int main(int argc, char** argv) {
 
     while (!Done) {
         graphic.Draw_grid();
+        graphic.Draw_status();
         al_flip_display();
 
         ALLEGRO_EVENT ev;
@@ -74,12 +75,11 @@ int main(int argc, char** argv) {
             if (ev.mouse.button & 1) {
                 int x = ev.mouse.x;
                 int y = ev.mouse.y;
+                std::pair<int, int> coords = logic.Get_Mouse_Input(x, y);
+                int ans = logic.get_shape(coords.first, coords.second);
             }
         }
 
     }
-
-
-
 }
 

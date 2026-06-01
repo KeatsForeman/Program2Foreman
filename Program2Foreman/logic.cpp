@@ -1,6 +1,25 @@
 #include "logic.h"
 
 logic::logic() {
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			already_played[i][j] = false;
+		}
+	}
+	srand(time(0));
+	//used to randomly fill grid
+	std::vector<int> shape_filler = {1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12};
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (i == 4 && j == 4) {
+				shapes[i][j] = 0;
+				break;
+			}
+			int num = rand() % shape_filler.size();
+			shapes[i][j] = shape_filler.at(num);
+			shape_filler.erase(shape_filler.begin() + num);
+		}
+	}
 }
 logic::~logic() {
 }
@@ -96,4 +115,7 @@ std::pair<int, int> logic::Get_Mouse_Input(int x, int y) {
 			return std::make_pair(4, 4);
 		}
 	}
+}
+int logic::get_shape(int x, int y) {
+	return shapes[x][y];
 }
