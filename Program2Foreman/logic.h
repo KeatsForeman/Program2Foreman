@@ -7,7 +7,7 @@ class logic {
 public:
 	logic();
 	~logic();
-	 std::pair<int, int> Get_Mouse_Input(int x, int y);
+	 std::vector<std::pair<int, int>> Get_Mouse_Input(int x, int y);
 	 int get_shape(int x, int y);
 
 private:

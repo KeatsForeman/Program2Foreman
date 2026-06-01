@@ -20,3 +20,41 @@ void graphics::Draw_grid() {
 void graphics::Draw_status() {
 	al_draw_filled_rectangle(600, 480, 750, 600, al_map_rgb(0, 255, 0));
 }
+void graphics::Draw_shape(int shape, int x, int y) {
+	if (shape == 1) {
+		al_draw_filled_circle(x, y, 20, al_map_rgb(255, 0, 0));
+	}
+	if (shape == 2) {
+		al_draw_filled_circle(x, y, 20, al_map_rgb(0, 255, 0));
+	}
+	if (shape == 3) {
+		al_draw_filled_circle(x, y, 20, al_map_rgb(0, 0, 255));
+	}
+	if (shape == 4) {
+		al_draw_filled_circle(x, y, 20, al_map_rgb(255, 0, 255));
+	}
+	if (shape == 5) {
+		al_draw_filled_circle(x, y, 20, al_map_rgb(0, 255, 255));
+	}
+	if (shape == 6) {
+		al_draw_filled_circle(x, y, 20, al_map_rgb(255, 255, 255));
+	}
+	if (shape == 7) {
+		al_draw_filled_rectangle(x-10, y-10, x + 10, y+10, al_map_rgb(255, 0, 0));
+	}
+	if (shape == 8) {
+		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(0, 255, 0));
+	}
+	if (shape == 9) {
+		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(0, 0, 255));
+	}
+	if (shape == 10) {
+		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(255, 0, 255));
+	}
+	if (shape == 11) {
+		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(0, 255, 255));
+	}
+	if (shape == 12) {
+		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(255, 255, 255));
+	}
+}

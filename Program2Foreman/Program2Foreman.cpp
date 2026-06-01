@@ -75,8 +75,13 @@ int main(int argc, char** argv) {
             if (ev.mouse.button & 1) {
                 int x = ev.mouse.x;
                 int y = ev.mouse.y;
-                std::pair<int, int> coords = logic.Get_Mouse_Input(x, y);
-                int ans = logic.get_shape(coords.first, coords.second);
+                std::vector<std::pair<int, int>> coords = logic.Get_Mouse_Input(x, y);
+                int ansShape = logic.get_shape(coords[0].first, coords[0].second);
+                int ansx = coords[1].first;
+                int ansy = coords[1].second;
+                std::cout << ansx << " " << ansy << "\n";
+                graphic.Draw_shape(ansShape, ansx, ansy);
+
             }
         }
 

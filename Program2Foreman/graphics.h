@@ -8,6 +8,7 @@ public:
 	~graphics();
 	void Draw_grid();
 	void Draw_status();
+	void Draw_shape(int shape, int x, int y);
 
 
 };
