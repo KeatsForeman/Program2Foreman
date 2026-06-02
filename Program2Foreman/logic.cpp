@@ -147,3 +147,18 @@ std::vector<std::pair<int, int>> logic::Get_Mouse_Input(int x, int y) {
 int logic::get_shape(int x, int y) {
 	return shapes[x][y];
 }
+void logic::make_move(int x, int y) {
+	already_played[x][y] = true;
+}
+bool logic::compare_shapes(int x, int y) {
+	if (x == y) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+bool logic::get_square_status(int x, int y) {
+	return already_played[x][y];
+}
+

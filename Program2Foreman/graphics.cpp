@@ -1,7 +1,9 @@
 #include "graphics.h"
+#include "logic.h"
 
 
-graphics::graphics() {
+graphics::graphics(logic* l) {
+	gamelogic = l;
 }
 graphics::~graphics() {
 }
@@ -40,21 +42,47 @@ void graphics::Draw_shape(int shape, int x, int y) {
 		al_draw_filled_circle(x, y, 20, al_map_rgb(255, 255, 255));
 	}
 	if (shape == 7) {
-		al_draw_filled_rectangle(x-10, y-10, x + 10, y+10, al_map_rgb(255, 0, 0));
+		al_draw_filled_rectangle(x-20, y-20, x + 20, y+20, al_map_rgb(255, 0, 0));
 	}
 	if (shape == 8) {
-		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(0, 255, 0));
+		al_draw_filled_rectangle(x - 20, y - 20, x + 20, y + 20, al_map_rgb(0, 255, 0));
 	}
 	if (shape == 9) {
-		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(0, 0, 255));
+		al_draw_filled_rectangle(x - 20, y - 20, x + 20, y + 20, al_map_rgb(0, 0, 255));
 	}
 	if (shape == 10) {
-		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(255, 0, 255));
+		al_draw_filled_rectangle(x - 20, y - 20, x + 20, y + 20, al_map_rgb(255, 0, 255));
 	}
 	if (shape == 11) {
-		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(0, 255, 255));
+		al_draw_filled_rectangle(x - 20, y - 20, x + 20, y + 20, al_map_rgb(0, 255, 255));
 	}
 	if (shape == 12) {
-		al_draw_filled_rectangle(x - 10, y - 10, x + 10, y + 10, al_map_rgb(255, 255, 255));
+		al_draw_filled_rectangle(x - 20, y - 20, x + 20, y + 20, al_map_rgb(255, 255, 255));
 	}
+}
+void graphics::Draw_x() {
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (gamelogic->get_square_status(i, j)) {
+				int x = (j * 150) + 75;
+				int y = (i * 120) + 60;
+				al_draw_line(x - 30, y - 20, x + 30, y + 20, al_map_rgb(255, 255, 255), 2);
+				al_draw_line(x - 30, y + 20, x + 30, y - 20, al_map_rgb(255, 255, 255), 2);
+			}
+		}
+	}
+}
+void graphics::clear_squares() {
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (gamelogic->get_square_status(i, j)) {
+				int x = (j * 150);
+				int y = (i * 120);
+				al_draw_filled_rectangle(x, y, x + 150, y + 120, al_map_rgb(0, 0, 0));
+			}
+		}
+	}
+}
+void graphics::clear_text() {
+	al_draw_filled_rectangle(750, 0, 950, 600, al_map_rgb(0, 0, 0));
 }
