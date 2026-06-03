@@ -1,5 +1,5 @@
 // Program2Foreman.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+//Keats Foreman
 
 #include <iostream>
 #include <string>
@@ -15,6 +15,7 @@ int width = 950;
 int height = 600;
 
 int main(int argc, char** argv) {
+    int frames = 0;
 
     //initializations
     if (!al_init()) {
@@ -33,6 +34,7 @@ int main(int argc, char** argv) {
     ALLEGRO_MOUSE_STATE state;
     ALLEGRO_DISPLAY* screen;
     ALLEGRO_FONT* font = al_load_font("Cat.ttf", 30, 0);
+    ALLEGRO_TIMER* timer = NULL;
     
     EventQueue = al_create_event_queue();
     screen = al_create_display(width, height);
@@ -47,14 +49,19 @@ int main(int argc, char** argv) {
         fprintf(stderr, "failed to load font");
     }
 
+
+    timer = al_create_timer(1.0);
     //event registrations
     al_register_event_source(EventQueue, al_get_mouse_event_source());
     al_register_event_source(EventQueue, al_get_display_event_source(screen));
+    al_register_event_source(EventQueue, al_get_timer_event_source(timer));
 
     bool gaming = true;
 
     while (gaming) {
+        ALLEGRO_EVENT ev;
         al_clear_to_color(al_map_rgb(0, 0, 0));
+
         logic logic;
         graphics graphic(&logic);
 
@@ -70,11 +77,15 @@ int main(int argc, char** argv) {
         int score = 0;
         int remaining = 12;
         int time = 0;
+        frames = 0;
+
+        al_start_timer(timer);
 
         while (!Done) {
 
             std::string pairs = std::to_string(score);
             std::string pairsLeft = std::to_string(remaining);
+            std::string times = std::to_string(time);
 
             bool making_move = false;
             graphic.clear_squares();
@@ -87,10 +98,15 @@ int main(int argc, char** argv) {
             al_draw_text(font, al_map_rgb(255, 255, 255), 800, 80, 0, "left: ");
             al_draw_text(font, al_map_rgb(255, 255, 255), 890, 80, 0, pairsLeft.c_str());
             al_draw_text(font, al_map_rgb(255, 255, 255), 800, 120, 0, "time: ");
+            al_draw_text(font, al_map_rgb(255, 255, 255), 890, 120, 0, times.c_str());
             al_flip_display();
 
-            ALLEGRO_EVENT ev;
+            
             al_wait_for_event(EventQueue, &ev);
+
+            if (ev.type == ALLEGRO_EVENT_TIMER) {
+                time += 1;
+            }
 
             if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { Done = true; }
 
@@ -118,7 +134,7 @@ int main(int argc, char** argv) {
                 else if (guesses >= 2) {
                     make_guess = true;
                     if (make_guess) {
-                        al_wait_for_event(EventQueue, &ev);
+                        
                         int x = ev.mouse.x;
                         int y = ev.mouse.y;
                         std::vector<std::pair<int, int>> coords = logic.Get_Mouse_Input(x, y);
@@ -136,6 +152,7 @@ int main(int argc, char** argv) {
                                 }
                             }
                             else {
+                                //al_rest(5);
                                 al_clear_to_color(al_map_rgb(0, 0, 0));
                             }
                         }
@@ -145,6 +162,27 @@ int main(int argc, char** argv) {
                     }
 
                     guesses = 0;
+                }
+            }
+        }
+        al_stop_timer(timer);
+        al_draw_filled_rectangle(0, 0, width/2, height, al_map_rgb(0, 255, 0));
+        al_draw_filled_rectangle(width/2, 0, width, height, al_map_rgb(255, 0, 0));
+        std::string times = std::to_string(time); 
+        al_draw_text(font, al_map_rgb(255, 255, 255), width/2, height/2, 0, "you finished in: ");
+        al_draw_text(font, al_map_rgb(255, 255, 255), width/2 + 200, height/2, 0, times.c_str());
+        al_draw_text(font, al_map_rgb(255, 255, 255), width / 2 - 200, 200, 0, "play Again? <yes, no>");
+        al_flip_display();
+        while (true) {
+            al_wait_for_event(EventQueue, &ev);
+            if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                int x = ev.mouse.x;
+                if (x <= width / 2) {
+                    break;
+                }
+                else if (x > width / 2) {
+                    gaming = false;
+                    break;
                 }
             }
         }
